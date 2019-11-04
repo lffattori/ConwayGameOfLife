@@ -10,14 +10,23 @@ import UIKit
 import QuartzCore
 import SceneKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, SCNSceneRendererDelegate {
+
+    let manager = Managers()
+    let scene = GameScene()
+
+    var scnView: SCNView = SCNView()
+
+    @IBOutlet weak var scnViewOutlet: SCNView!
+    @IBAction func nextGenAction(_ sender: Any) {
+        isRunning = !isRunning
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // create a new scene
-        let scene = GameScene()
-        
+
         // create and add a camera to the scene
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
@@ -41,8 +50,10 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(ambientLightNode)
 
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
+        if let scnView = scnViewOutlet {
+            self.scnView = scnView
+        }
+
         // set the scene to the view
         scnView.scene = scene
         
@@ -58,13 +69,28 @@ class GameViewController: UIViewController {
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         scnView.addGestureRecognizer(tapGesture)
+
+        scnView.delegate = self
+        scnView.isPlaying = true
+        scnView.loops = true
     }
-    
+
+    var nextTime: TimeInterval = 0
+    var interval: TimeInterval = 0.3
+    var isRunning: Bool = false
+
+
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if time >= nextTime && isRunning == true {
+            manager.jailorKillerOrRevival(grid: scene.individuals)
+            nextTime = time + interval
+        }
+    }
+
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
 
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
         
         // check what nodes are tapped
         let p = gestureRecognize.location(in: scnView)
@@ -76,26 +102,13 @@ class GameViewController: UIViewController {
             let result = hitResults[0]
 
             // get its material
-            let material = result.node.geometry!.firstMaterial!
-            
-            // highlight it
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = 0.5
-            
-            // on completion - unhighlight
-            SCNTransaction.completionBlock = {
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                material.emission.contents = UIColor.yellow
-                material.diffuse.contents = UIColor.yellow
-
-                SCNTransaction.commit()
+            if let individual = result.node as? Individuals {
+                if individual.isAlive == false {
+                    individual.isAlive = true
+                } else {
+                    individual.isAlive = false
+                }
             }
-            
-            material.emission.contents = UIColor.blue
-            
-            SCNTransaction.commit()
         }
     }
     

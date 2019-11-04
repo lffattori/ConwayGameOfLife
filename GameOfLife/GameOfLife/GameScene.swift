@@ -23,10 +23,6 @@ class GameScene: SCNScene {
             var singleRow = [Individuals]()
             for col:Int in 0...32 {
                 let individual = Individuals(x: col, y: row)
-                individual.geometry = SCNBox(width: 0.6 , height: 0.6,
-                                      length: 0.08, chamferRadius: 0.005)
-                individual.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
-                individual.geometry?.firstMaterial?.emission.contents = UIColor.darkGray
 
                 let offset: Int = 16
                 
