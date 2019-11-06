@@ -78,12 +78,14 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     var nextTime: TimeInterval = 0
     var interval: TimeInterval = 0.3
     var isRunning: Bool = false
+    var layer: Int = 1
 
 
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if time >= nextTime && isRunning == true {
-            manager.jailorKillerOrRevival(grid: scene.individuals)
+            scene.layerSetUp(layer)
             nextTime = time + interval
+            layer += 1
         }
     }
 

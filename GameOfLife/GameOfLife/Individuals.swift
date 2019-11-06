@@ -22,28 +22,31 @@ public class Individuals: SCNNode {
     }
     // Como a célula vai estar se estiver viva
     func alive (){
-        self.geometry?.firstMaterial?.emission.contents = UIColor.red
-        self.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        self.geometry?.firstMaterial?.emission.contents = UIColor.blue
+        self.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
     }
     // Como a célula vai estar se estiver morta
     func dead (){
-        self.geometry?.firstMaterial?.emission.contents = UIColor.lightGray
-        self.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
+        self.geometry?.firstMaterial?.emission.contents = UIColor.yellow
+        self.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
     }
-
+    // Vai inicializar a célula ou não
+    var exists: Bool = true
     // As coordenadas do nosso quadradinho
     let x : Int
     let y : Int
+    let z : Int
 
     // Inicializando
-    init(x: Int, y: Int){
+    init(x: Int, y: Int, z: Int) {
         self.x = x
         self.y = y
+        self.z = z
         self.isAlive = false
         super.init()
+        self.geometry = SCNBox(width: 0.8 , height: 0.8,
+        length: 0.8, chamferRadius: 0.05)
         dead()
-        self.geometry = SCNBox(width: 0.6 , height: 0.6,
-        length: 0.08, chamferRadius: 0.005)
     }
 
     required init?(coder: NSCoder) {
