@@ -18,17 +18,22 @@ public class Individuals: SCNNode {
             } else {
                 alive()
             }
+            if z % 2 == 1 && newValue == true {
+                geometry = SCNBox(width: 0.8, height: 0.8, length: 0.8, chamferRadius: 0.05)
+                self.geometry?.firstMaterial?.emission.contents = UIColor.lightGray
+                self.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+            }
         }
     }
     // Como a célula vai estar se estiver viva
     func alive (){
-        self.geometry?.firstMaterial?.emission.contents = UIColor.blue
-        self.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        self.geometry?.firstMaterial?.emission.contents = UIColor.purple
+        self.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
     }
     // Como a célula vai estar se estiver morta
     func dead (){
-        self.geometry?.firstMaterial?.emission.contents = UIColor.yellow
-        self.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+        self.geometry?.firstMaterial?.emission.contents = UIColor.orange
+        self.geometry?.firstMaterial?.diffuse.contents = UIColor.orange
     }
     // Vai inicializar a célula ou não
     var exists: Bool = true
@@ -45,7 +50,7 @@ public class Individuals: SCNNode {
         self.isAlive = false
         super.init()
         self.geometry = SCNBox(width: 0.8 , height: 0.8,
-        length: 0.8, chamferRadius: 0.05)
+        length: 0.8, chamferRadius: 0.5)
         dead()
     }
 

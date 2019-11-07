@@ -20,13 +20,13 @@ class GameScene: SCNScene {
         super.init()
 
         // Populando a matriz
-        for row:Int in 0...32 {
+        for row:Int in 0...16 {
             // fazendo arrays, que são linhas com elementos
             var singleRow = [Individuals]()
             
-            for col:Int in 0...32 {
+            for col:Int in 0...16 {
                 let cell = Individuals(x: col, y: row, z: 0)
-                let offset: Int = 16
+                let offset: Int = 8
                 
                 cell.position.x = Float(row - offset)
                 cell.position.y = Float(col - offset)
@@ -56,11 +56,11 @@ class GameScene: SCNScene {
     }
 
     func creatANewGrid(_ newGrid: [[Individuals]], _ layer: Int) {
-        for row:Int in 0...32 {
-        for col:Int in 0...32 {
+        for row:Int in 0...16 {
+        for col:Int in 0...16 {
             let cell = newGrid[row][col]
 
-            let offset: Int = 16
+            let offset: Int = 8
 
             cell.position.x = Float(row - offset)
             cell.position.y = Float(col - offset)
