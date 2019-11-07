@@ -23,15 +23,17 @@ class GameScene: SCNScene {
         for row:Int in 0...32 {
             // fazendo arrays, que são linhas com elementos
             var singleRow = [Individuals]()
-
+            
             for col:Int in 0...32 {
                 let cell = Individuals(x: col, y: row, z: 0)
-                let random = Int.random(in: 0...5)
-                let offset: Int = random
-
+                let offset: Int = 16
+                
                 cell.position.x = Float(row - offset)
                 cell.position.y = Float(col - offset)
 
+                if Int.random(in: 0...10) < 3 {
+                    cell.isAlive = true
+                }
                 singleRow.append(cell)
                 // Faz as coisas aparecerem na tela
                 self.rootNode.addChildNode(cell)
@@ -40,14 +42,14 @@ class GameScene: SCNScene {
             grid.append(singleRow)
             gridIndividual.append(self.grid)
         }
-        // Cada vez que o código percorre esse for, nos adicionamos uma coluna dentro da matriz
+        // Cada vez que o código percorre esse for, nós adicionamos uma coluna dentro da matriz
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func layerSetUp(_ latyer: Int) {
+    func layerSetUp(_ layer: Int) {
         let newGrid = manager.engineerThatPutIndividualsInNewJails(oldGrid: grid, z: layer)
         creatANewGrid(newGrid, layer)
         grid = newGrid
