@@ -50,7 +50,7 @@ class GameScene: SCNScene {
     }
 
     func layerSetUp(_ layer: Int) {
-        let newGrid = manager.engineerThatPutIndividualsInNewJails(oldGrid: grid, z: layer)
+        let newGrid = manager.engineerThatPutIndividualsInNewHouses(oldGrid: grid, z: layer)
         creatANewGrid(newGrid, layer)
         grid = newGrid
     }

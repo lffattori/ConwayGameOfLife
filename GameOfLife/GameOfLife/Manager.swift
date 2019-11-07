@@ -84,8 +84,8 @@ class Managers {
         }
         return false
     }
-// Criador de novas grids
-    func engineerThatPutIndividualsInNewJails (oldGrid: [[Individuals]], z: Int) -> [[Individuals]] {
+    // Engenheiro - Criador de novas grids
+    func engineerThatPutIndividualsInNewHouses (oldGrid: [[Individuals]], z: Int) -> [[Individuals]] {
         var newGrid : [[Individuals]] = []
         var count = 0
 
@@ -104,7 +104,7 @@ class Managers {
             }
         return newGrid
     }
-
+    // Vai clonar os indivíduos vivos para a grid de cima
     func cloneIndividual(oldIndividual: Individuals, z: Int) -> Individuals {
         let newIndividual: Individuals = Individuals(x: oldIndividual.x, y: oldIndividual.y, z: z)
 
